@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
+import 'react-native-gesture-handler';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import DeckList from './components/DeckList.js'
+import DeckDetails from './components/DeckDetails.js'
+import NewCard from './components/NewCard.js'
+import CreateDeck from './components/CreateDeck.js';
+import { NavigationContainer } from '@react-navigation/native';
+// import { View, Text, Button } from 'react-native';
+
+const Stack = createStackNavigator();
+
+function DeckListScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <DeckList navigation={navigation} />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function NewCardScreen({ navigation }) {
+  return (
+    <NewCard navigation={navigation} />
+  )
+}
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Decks" component={DeckListScreen} />
+        <Stack.Screen name="Deck Details" component={DeckDetails} />
+        <Stack.Screen name="Create Deck" component={CreateDeck} />
+        <Stack.Screen name="New Card" component={NewCardScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App
