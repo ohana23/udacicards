@@ -39,7 +39,6 @@ function DeckDetails({ route, navigation }) {
             </View>
 
             <View style={styles.buttonGroup}>
-                {/* TODO: Change first AddCardButton to a different component. */}
                 <StartQuizButton title="START QUIZ"/>
                 <AddCardButton title="ADD A CARD"/>
             </View>

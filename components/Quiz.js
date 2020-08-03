@@ -1,19 +1,36 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import QuizResults from './QuizResults'
 
 class Quiz extends React.Component {
     constructor(props) {
-        super(props);
-        this.state = {questionNumber: 1, showAnswer: false};
-        this.deckList = this.props.route.params.deckList;
+        super(props)
+        this.deckList = this.props.route.params.deckList
+        this.state = {
+            questionNumber: 1, 
+            showAnswer: false,
+            totalQuestions: this.props.route.params.deckList.length,
+            correctAnswers: 0
+        }
+        this.handleRestart = this.handleRestart.bind(this);
     }
 
     handleAnswer(ans) {
         this.setState({ 
             questionNumber: this.state.questionNumber + 1,
-            showAnswer: false 
-        });
+            showAnswer: false,
+            correctAnswers: ans ? this.state.correctAnswers + 1 : this.state.correctAnswers
+        })
+    }
+
+    handleRestart() {
+        this.setState({
+            questionNumber: 1,
+            showAnswer: false,
+            totalQuestions: this.props.route.params.deckList.length,
+            correctAnswers: 0
+        })
     }
 
     showAnswer() {
@@ -57,11 +74,26 @@ class Quiz extends React.Component {
     }
 
     render() {
+        const { questionNumber, totalQuestions, showAnswer, correctAnswers } = this.state
+
         return (
             <View style={styles.viewContainer}>
-                <Text style={styles.progress}>{this.state.questionNumber} / {this.deckList.length}</Text>
-                <Text style={styles.question}>{this.deckList[this.state.questionNumber - 1].question}</Text>
-                {this.state.showAnswer ? this.showAnswer() : this.showAnswerButton()}
+                {questionNumber <= totalQuestions && 
+                    <View>
+                        <Text style={styles.progress}>{questionNumber} / {this.deckList.length}</Text>
+                        <Text style={styles.question}>
+                            {this.deckList[questionNumber - 1].question}
+                        </Text>
+                    </View>
+                }
+
+                {questionNumber <= totalQuestions
+                    ? showAnswer ? this.showAnswer() : this.showAnswerButton()
+                    : <QuizResults 
+                        correctAnswers={correctAnswers} 
+                        totalQuestions={totalQuestions} 
+                        handleRestart={this.handleRestart}/>
+                }
             </View>
         )
     }
@@ -86,7 +118,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
         marginBottom: 100,
-        padding: 15
+        padding: 15,
+        color: 'rgb(10, 125, 240)',
     },
     showAnswerBtn: {
         backgroundColor: 'rgb(10, 125, 240)',
@@ -124,7 +157,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 10,
         marginRight: 5,
-        padding: 15,
+        padding: 20,
         borderRadius: 10,
         backgroundColor: '#28A745'
     },
@@ -133,7 +166,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 5,
         marginRight: 10,
-        padding: 15,
+        padding: 20,
         borderRadius: 10,
         backgroundColor: '#DC3545'
     },
