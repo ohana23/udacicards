@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform } from 'react-native'
 import { TouchableWithoutFeedback, TouchableOpacity, TextInput } from 'react-native-gesture-handler'
 
 function CreateDeck({ route, navigation }) {
@@ -9,6 +9,7 @@ function CreateDeck({ route, navigation }) {
             style={styles.container}
             keyboardShouldPersistTaps={'never'}
         >   
+            <Text>{JSON.stringify(route.params)}</Text>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <TextInput
                     style={styles.input}
@@ -17,7 +18,7 @@ function CreateDeck({ route, navigation }) {
                     defaultValue={""}
                 />
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Decks')}
+                    // onPress={() => navigation.navigate('Decks')}
                 >
                     <Text style={styles.button}>CREATE</Text>
                 </TouchableOpacity>
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 20,
         fontWeight: 'bold',
-        // height: 100,
         backgroundColor: 'rgb(210, 210, 210)'
     },
     button: {

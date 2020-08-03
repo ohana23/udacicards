@@ -1,30 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import AsyncStorage from '@react-native-community/async-storage'
+import { decks } from '../utils/_DATA'
 
 class DeckList extends React.Component {
-    render() {
-        const DATA = [
-            {
-                id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-                title: 'Biology 2',
-                subtitle: '17 cards'
-            },
-            {
-                id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-                title: 'Italian',
-                subtitle: '4 cards'
-            },
-            {
-                id: '58694a0f-3da1-471f-bd96-145571e29d72',
-                title: 'Discrete Structures',
-                subtitle: '2 cards'
-            },
-        ]
+    state = {
+        DATA: decks
+    }
 
-        function AddDeckToDeckList(deck) {
-            
-        }
+    // onSubmit = async() => {
+    //     this.setState({ DATA: []})
+    //     await AsyncStorage.setItem('data', this.state.DATA)
+    // }
+
+    render() {
+        const { DATA } = this.state
 
         const DeckItem = ({ title, subtitle }) => (
             <TouchableOpacity
@@ -47,7 +38,7 @@ class DeckList extends React.Component {
         const AddDeckButton = () => {
             return (
                 <TouchableOpacity
-                    style={styles.button}
+                    // style={styles.button}
                     onPress={() => this.props.navigation.navigate('Create Deck')}
                 >
                     <Text style={styles.button}>CREATE DECK</Text>
@@ -63,7 +54,6 @@ class DeckList extends React.Component {
                     keyExtractor={item => item.id}
                 />
                 <AddDeckButton />
-
             </View>
         )
     }
