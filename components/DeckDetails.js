@@ -15,12 +15,15 @@ function DeckDetails({ route, navigation }) {
     }
 
 
-    const StartQuizButton = ({title}) => {
+    const StartQuizButton = ({ title }) => {
         return (
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate('Start Quiz', {
-                    deckList : [{question: "what is your name?", answer: "george"}, {question: "what is your age?", answer: "4"}, {question: "are you gay?", answer: "Ya"}]
+                    deckList: [
+                        {question: "Please tell what the powerhouse of the cell is is it the mitochondria or is it something even crazier than that", answer: "yea i kinda feel the same way like i'm asking the asame thing is it the mitochondria or what lol"}, 
+                        {question: "What is your age?", answer: "4"},
+                    ]
                 })}
             >
                 <Text style={styles.button}>{title}</Text>

@@ -1,64 +1,66 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button} from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 class Quiz extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {questionNumber: 1, showAnswer: false};
-        console.log(this.props);
         this.deckList = this.props.route.params.deckList;
     }
 
     handleAnswer(ans) {
-        this.setState({questionNumber: this.state.questionNumber+1});
+        this.setState({ 
+            questionNumber: this.state.questionNumber + 1,
+            showAnswer: false 
+        });
     }
+
     showAnswer() {
         return (
-        <View>
-            <Text style={styles.title}>Answer: </Text>
-            <Text style={styles.subtitle}>{this.deckList[this.state.questionNumber-1].answer} </Text>
-            <Text style={styles.title}>How did you do?</Text>
-            <Text style={styles.subtitle}>You answered...</Text>
+            <View style={styles.bottom}>
+                <Text style={styles.answer}>{this.deckList[this.state.questionNumber - 1].answer}</Text>
 
-            <View style={styles.buttonsContainer}>
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity
-                        onPress={() => this.handleAnswer(true)}
-                        style={styles.btnSuccess}>
-                        <Text style={styles.btnText}>Correct</Text>
-                    </TouchableOpacity>
+                <View style={styles.buttonsContainer}>
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity
+                            onPress={() => this.handleAnswer(true)}
+                            style={styles.btnSuccess}>
+                                <Text style={styles.btnText}>Correct</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity
+                            onPress={() => this.handleAnswer(false)}
+                            style={styles.btnError}>
+                                <Text style={styles.btnText}>Incorrect</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity
-                        onPress={() => this.handleAnswer(false)}
-                        style={styles.btnError}>
-                        <Text style={styles.btnText}>Incorrect</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
-
-        </View> );
+        )
     }
 
     showAnswerButton() {
-        return <TouchableOpacity
-            style={styles.item}
-            onPress={() => this.setState({showAnswer: true})}
-        >
-            <Text style={styles.item}>Show answer</Text>
-        </TouchableOpacity>;
+        return (
+            <View style={styles.bottom}>
+                <TouchableOpacity
+                    style={styles.showAnswerBtn}
+                    onPress={() => this.setState({ showAnswer: true })}
+                >
+                    <Text style={styles.showAnswerBtnText}>Show answer</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     render() {
         return (
             <View style={styles.viewContainer}>
-                <Text style={styles.subtitle}>Quiz time! {this.state.questionNumber}</Text>
-                <Text style={styles.title}>Question: {this.state.showAnswer}</Text>
-                <Text style={styles.subtitle}>{this.deckList[this.state.questionNumber-1].question}</Text>
-
+                <Text style={styles.progress}>{this.state.questionNumber} / {this.deckList.length}</Text>
+                <Text style={styles.question}>{this.deckList[this.state.questionNumber - 1].question}</Text>
                 {this.state.showAnswer ? this.showAnswer() : this.showAnswerButton()}
             </View>
         )
@@ -66,34 +68,52 @@ class Quiz extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    item: {
-        fontSize: 20,
+    bottom: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 15
+    },
+    question: {
         fontWeight: 'bold',
+        fontSize: 24,
+        textAlign: 'center',
+        marginTop: 10,
+        marginBottom: 100,
+        padding: 15
+    },
+    answer: {
+        fontWeight: 'bold',
+        fontSize: 24,
+        textAlign: 'center',
+        marginBottom: 100,
+        padding: 15
+    },
+    showAnswerBtn: {
         backgroundColor: 'rgb(10, 125, 240)',
         borderRadius: 10,
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
         padding: 20,
-        color: "white"
+    },
+    showAnswerBtnText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        letterSpacing: 1
     },
     viewContainer: {
-        flex: 1
-    },
-    container: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
     },
-    title: {
+    progress: {
         fontSize: 20,
-        color: 'black',
-        fontWeight: 'bold'
-    },
-    subtitle: {
-        color: 'black',
-        fontSize: 30
-
+        color: 'gray',
+        fontWeight: 'bold',
+        backgroundColor: 'lightgray',
+        width: 80,
+        textAlign: 'center'
     },
     button: {
         backgroundColor: 'green',
@@ -102,29 +122,31 @@ const styles = StyleSheet.create({
     btnSuccess: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 8,
-        height: 50,
+        marginLeft: 10,
+        marginRight: 5,
+        padding: 15,
         borderRadius: 10,
         backgroundColor: '#28A745'
     },
     btnError: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 8,
-        height: 50,
+        marginLeft: 5,
+        marginRight: 10,
+        padding: 15,
         borderRadius: 10,
         backgroundColor: '#DC3545'
     },
     btnText: {
-        color: "white",
+        color: 'white',
         fontSize: 14,
-        textTransform: 'uppercase'
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        letterSpacing: 0.5
     },
     buttonsContainer: {
         flexDirection: 'row'
     }
-
-
 })
 
 

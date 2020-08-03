@@ -6,13 +6,24 @@ import { decks } from '../utils/_DATA'
 
 class DeckList extends React.Component {
     state = {
-        DATA: decks
+        DATA: [
+            {
+                id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+                title: 'Biology 2',
+                subtitle: '17 cards'
+            },
+            {
+                id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+                title: 'Italian',
+                subtitle: '4 cards'
+            },
+            {
+                id: '58694a0f-3da1-471f-bd96-145571e29d72',
+                title: 'Discrete Structures',
+                subtitle: '2 cards'
+            },
+        ]
     }
-
-    // onSubmit = async() => {
-    //     this.setState({ DATA: []})
-    //     await AsyncStorage.setItem('data', this.state.DATA)
-    // }
 
     render() {
         const { DATA } = this.state
