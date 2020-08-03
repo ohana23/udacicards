@@ -14,6 +14,20 @@ function DeckDetails({ route, navigation }) {
         )
     }
 
+
+    const StartQuizButton = ({title}) => {
+        return (
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Start Quiz', {
+                    deckList : [{question: "what is your name?", answer: "george"}, {question: "what is your age?", answer: "4"}, {question: "are you gay?", answer: "Ya"}]
+                })}
+            >
+                <Text style={styles.button}>{title}</Text>
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <View style={styles.container}>
             <View>
@@ -23,7 +37,7 @@ function DeckDetails({ route, navigation }) {
 
             <View style={styles.buttonGroup}>
                 {/* TODO: Change first AddCardButton to a different component. */}
-                <AddCardButton title="START QUIZ"/> 
+                <StartQuizButton title="START QUIZ"/>
                 <AddCardButton title="ADD A CARD"/>
             </View>
 
